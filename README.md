@@ -14,16 +14,16 @@ There are many ways to run the program on startup (see [here](https://www.dexter
 
 Open the **rc.local** file:
   
-  `sudo nano /etc/re.loacl`
+`sudo nano /etc/re.loacl`
 
-  and add the following command just before `exit 0`:
+and add the following command just before `exit 0`:
 
-  `sudo python /home/pi/scripts/save_ip.py >>/home/pi/logs/save_ip.txt 2>&1 &`
+`sudo python /home/pi/scripts/save_ip.py >>/home/pi/logs/save_ip.txt 2>&1 &`
 
-  The above command will run the python script at background, so it will block the normal booting process. The stdout and stderr will be redirected to **/home/pi/logs/save_ip.txt** for diagnostic purpose.
-  ## Pitfalls
-  Initially, I used `&>>` to redirect stdout and stderr, which did not work, because **/etc/rc.local** still uses **dash** shell (thanks to this [ansower](https://askubuntu.com/questions/937944/redirecting-output-in-rc-local-not-working)). A comparison of redirection command between bash shell and POSIX form is shown in below [table](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file):
-  | Bash | POSIX |
+The above command will run the python script at background, so it will not block the normal booting process. The `stdout` and `stderr` will be redirected to **/home/pi/logs/save_ip.txt** for diagnostic purpose.
+## Pitfalls
+Initially, I used `&>>` to redirect stdout and stderr, which did not work, because **/etc/rc.local** still uses **dash** shell (thanks to this [ansower](https://askubuntu.com/questions/937944/redirecting-output-in-rc-local-not-working)). A comparison of redirection command between bash shell and POSIX form is shown in below [table](https://askubuntu.com/questions/420981/how-do-i-save-terminal-output-to-a-file):
+| Bash | POSIX |
 | ----------- | ----------- |
 | foo &> bar | foo >bar 2>&1 |
 | foo &>> bar | foo >>bar 2>&1 |
